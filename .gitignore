@@ -95,3 +95,4 @@ ENV/
 
 #Datastore
 MemoryData
+MemoryTestData
