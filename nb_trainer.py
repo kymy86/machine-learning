@@ -95,6 +95,7 @@ class Trainer(Logger):
         """
         From the given document, create a list of
         allow words. Remove the single char words
+        an the most frequent words
         """
         regex = '(the|to|you|he|she|only|if|it|[.,#!?]|)'
         words = re.sub(regex, '', document, flags=re.IGNORECASE).lower().split()

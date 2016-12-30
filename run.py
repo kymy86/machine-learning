@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+#pylint: disable=C0103
 from __future__ import print_function
 from nb_trainer import Trainer
 from nb_classifier import Classifier
@@ -15,28 +16,29 @@ if __name__ == '__main__':
     tot_spam = 0
     spam = 0
     accuracy = 0
-    error = 0
+    false_positive = 0
+    false_negative = 0
 
     for doc in classifier.test_data:
         if doc[0] == 'spam':
             tot_spam += 1
 
-    print("Tot size dataset {}".format(len(classifier.test_data)))
-    print("Tot real spam {}".format(tot_spam))
+    print("Dataset size {}".format(len(classifier.test_data)))
+    print("Spam in dataset {}".format(tot_spam))
 
     for doc in classifier.test_data:
         classifier.treshold = 0
         classifier.classify(doc[1])
-        if classifier.is_spam():
-            spam += 1
         if classifier.is_spam() and doc[0] == 'spam':
+            #True Negatives
             accuracy += 1
         if classifier.is_spam() and doc[0] == 'ham':
-            error += 1
+            #False positive: how many hams are classified as spam
+            false_positive += 1
+        if not classifier.is_spam() and doc[0] == 'spam':
+            #False Negative: how many spams aren't classified as spam
+            false_negative += 1
 
-    print("Real SPAM detected {}".format(accuracy))
-    print("Tot spam recognized {}".format(spam))
-    print("SPAM accuracy {}%".format(float(accuracy/tot_spam)*100))
-    print("False positive {}%".format(float(error/tot_spam)*100))
-
-
+    print("True Negatives {}".format(accuracy))
+    print("False Negative {}".format(false_negative))
+    print("False Positive {}".format(false_positive))
