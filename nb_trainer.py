@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-
-from __future__ import division
 import re
 import pickle
 import os
@@ -18,13 +16,13 @@ class Trainer(Logger):
     #rejection treshold
     _TRESHOLD = 100
     # document dataset
-    _dataset = list()
+    _dataset = []
     # list of test data
-    test_data = list()
+    test_data = []
     #occurences of each word in each document
-    words_counter = list()
+    words_counter = []
     # dictionary with all words in dataset and spam/ham probability
-    dictionary = list()
+    dictionary = []
     # tot number of spam
     m_spam = 0
     # tot number of ham
@@ -51,8 +49,7 @@ class Trainer(Logger):
         """
         with open(self._DATASET, 'r') as dataset_filename:
             lines = dataset_filename.readlines()
-            for line in lines:
-                self._dataset.append(line.strip("\n").split("\t"))
+            self._dataset = [line.strip("\n").split("\t") for line in lines]
         self._compute_train_test_dataset(split_ratio)
 
     def _compute_train_test_dataset(self, split_ratio):
@@ -71,6 +68,7 @@ class Trainer(Logger):
             words = self.get_list_words(document[1])
             # count the occurences of each word in each document
             self.words_counter.append({i:words.count(i) for i in words})
+
             for word in words:
                 if word not in self.dictionary:
                     #add words in the dictionary, by initializing them with score of 1

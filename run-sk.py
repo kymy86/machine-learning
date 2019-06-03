@@ -2,10 +2,8 @@
 Execute the same classification algorithm but with Python scikit
 library
 """
-#!/usr/local/bin/python3
-#pylint: disable=C0103
 
-from sklearn.cross_validation import KFold
+from sklearn.model_selection import KFold
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import confusion_matrix, f1_score
 from sklearn.feature_extraction.text import CountVectorizer
@@ -15,17 +13,17 @@ import numpy
 
 if __name__ == '__main__':
     with open('dataset/SMSSpamCollection', 'r') as dataset_filename:
-        data_frame = pandas.read_table(dataset_filename, sep='\t', header=None)
+        data_frame = pandas.read_csv(dataset_filename, sep='\t', header=None)
 
     pipeline = Pipeline([
         ('count_vectorizer', CountVectorizer(ngram_range=(1, 2))),
         ('classifier', MultinomialNB())])
 
-    k_fold = KFold(n=len(data_frame), n_folds=6)
+    kf = KFold(n_splits=6)
     scores = []
     confusion = numpy.array([[0, 0], [0, 0]])
 
-    for train_indices, test_indices in k_fold:
+    for train_indices, test_indices in kf.split(data_frame):
         train_text = data_frame.iloc[train_indices][1].values
         train_y = data_frame.iloc[train_indices][0].values
 

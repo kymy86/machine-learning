@@ -11,5 +11,3 @@ Added run-sk.py to compare my implementation with Naive Bayes implemented in Pyt
 ----------------------
 
 The SMS dataset is taken from [UCI Machine Learning repository](https://archive.ics.uci.edu/ml/datasets/SMS+Spam+Collection)
-
-Compatible from Python 3.0

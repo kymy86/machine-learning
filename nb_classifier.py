@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 from math import log10
 import pickle
 import sys
@@ -10,8 +8,8 @@ from nb_trainer import Trainer
 class Classifier(Logger):
 
     treshold = 0
-    dictionary = list()
-    test_data = list()
+    dictionary = []
+    test_data = []
 
     def __init__(self, offset, training_dataset, test_dataset):
         super(Classifier, self).__init__()
